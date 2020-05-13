@@ -1,37 +1,24 @@
 #include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 
-using namespace std;
+void my_personal_swap(int* a, int* b){
+if(!(a==0||b==0)){
+    int t=*a;
+    *a=*b;
+    *b=t;
+}
+}
 
-int min_cost(int n,int price[]){
-int cost[n+1];
-cost[1]=price[1];
-cost[2]=price[1]+price[2];
-for(int i=3;i<=n;i++){
-    cost[i]=std::min(cost[i-1],cost[i-2])+price[i];
+int main() {
+    int a, b;
+    cin >> a >> b;
+    my_personal_swap(&a, &b);
+    cout << a << " " << b << endl;
+    my_personal_swap(&a, NULL);
+    my_personal_swap(NULL, &b);
+    my_personal_swap(NULL, NULL);
+    return 0;
 }
-cout<<"Min cost path=["<<endl;
-int current=n;
-cout<<current<<" ";
-while(current!=1){
-    if(cost[current-1]==cost[current]-price[current])
-        current=current-1;
-    else if(cost[current-2]==cost[current]-price[current])
-        current=current-2;
-    else throw -1;
-    cout<<current<<" ";
 
-}
-cout<<"]\n";
-return cost[n];
-}
-int main()
-{
-    int n;
-    cin>>n;
-    int price[101];
-    for(int i=1;i<=n;i++){
-        cin>>price[i];
-    }
-    cout<<min_cost(n,price);
-
-}
