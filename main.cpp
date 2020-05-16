@@ -3,17 +3,7 @@
     using std::cout;
     using std::endl;
 
-    void my_slightly_less_dumb_reallocation(int** source, unsigned int n_old, unsigned int n_new){
-    if(!(*source==0)){
-       source=new int*[n_old];
-       }
-       delete[] source;
-    if(!(source==0&&n_old==0&&n_new==0)&&(n_old<n_new)){
-        for(int i=0;i<=n_old;i++){
-            source[i]=new int[n_old];
-        }
-    }
-    }
+    void my_slightly_less_dumb_reallocation(int** source, unsigned int n_old, unsigned int n_new);
 
 int main() {
     unsigned int n, i;
@@ -34,3 +24,24 @@ int main() {
     my_slightly_less_dumb_reallocation(&a, 0, 0);
     return 0;
 }
+void my_slightly_less_dumb_reallocation(int** source, unsigned int n_old, unsigned int n_new){
+    if(!(*source==0)&&(n_old<n_new)){
+       source=new int*[n_old];
+       delete[] source;
+       }
+ delete[] source;
+    if(!(source==0&&n_old==0&&n_new==0)&&(n_old<n_new)){
+            int *nsource=new int[n_old];
+        for(int i=0;i<=n_old;i++){
+            source[i]=new int[n_old];
+        }
+    for(int i=0;i<=n_old;i++){
+        nsource[i]=*source[i];
+    }
+
+    }
+
+     for(int i=0;i<n_old;i++){
+        delete source[i];
+     }
+    }
