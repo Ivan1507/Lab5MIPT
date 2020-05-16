@@ -1,41 +1,36 @@
  #include <iostream>
-using std::cin;
-using std::cout;
-using std::endl;
+    using std::cin;
+    using std::cout;
+    using std::endl;
 
-struct Cat {
-    char *name;
-    unsigned int id;
-    double weight, length;
-    unsigned int mice_caught;
-};
-
-
-Cat* get_home_for_a_cats_pride(unsigned int n){
-Cat *cats=new Cat[n];
-for(int i=0;i<n;i++){
-cats[i].name=new char[10];
-}
-return &cats[0];
-}
-void clear_home_of_a_cats_pride(Cat *cats, unsigned int n){
-for(int i=0;i<n;i++){
-    delete[] cats[i].name;
-}
-delete[] cats;
-}
-int main() {
-    unsigned int n;
-    cin >> n;
-    Cat *a = get_home_for_a_cats_pride(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i].name >> a[i].weight >> a[i].length >> a[i].mice_caught;
-        a[i].id = i;
+    void my_slightly_less_dumb_reallocation(int** source, unsigned int n_old, unsigned int n_new){
+    if(!(*source==0)){
+       source=new int*[n_old];
+       }
+       delete[] source;
+    if(!(source==0&&n_old==0&&n_new==0)&&(n_old<n_new)){
+        for(int i=0;i<=n_old;i++){
+            source[i]=new int[n_old];
+        }
     }
-    for (int i = 0; i < n; i++)
-        cout << a[i].name << " ";
-    cout << endl;
-    clear_home_of_a_cats_pride(a, n);
+    }
+
+int main() {
+    unsigned int n, i;
+    cin >> n;
+    int *a = NULL;
+    my_slightly_less_dumb_reallocation(&a, 0, n / 2);
+    for (i = 0; i < n / 2; i++)
+        cin >> a[i];
+    my_slightly_less_dumb_reallocation(&a, n / 2, n);
+    for (; i < n; i++)
+        cin >> a[i];
+    int sum = 0;
+    for (i = 0; i < n; i++)
+        sum += a[i];
+    cout << sum << endl;
+    my_slightly_less_dumb_reallocation(&a, n, n / 2);
+    my_slightly_less_dumb_reallocation(&a, n / 2, 0);
+    my_slightly_less_dumb_reallocation(&a, 0, 0);
     return 0;
 }
-
